@@ -11,5 +11,11 @@ namespace Demo.Views
         {
             InitializeComponent();
         }
+        private void OnGoToSignUpClick(object sender, RoutedEventArgs e)
+        {
+            var signUpWindow = new SignUp();
+            signUpWindow.Show();
+            this.Close();
+        }
     }
 }
