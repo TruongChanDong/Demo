@@ -61,14 +61,14 @@ namespace Demo.ViewModels
             }
             catch (Exception ex)
             {
-                Message = "Sign Up Failed!";
+                jsonResponse = "Sign Up Failed!";
             }
-            Message = jsonResponse.ToString();
             if (jsonResponse.Contains("Created account"))
             {
-                Message = "Sign Up Success!";
+                jsonResponse = "Sign Up Success!";
                 Messenger.Send(new LoginEvent(0));
             }
+            Message = jsonResponse;
         }
 
         [RelayCommand]
