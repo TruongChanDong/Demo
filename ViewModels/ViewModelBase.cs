@@ -1,8 +1,6 @@
-﻿using ReactiveUI;
-
-namespace Demo.ViewModels
+﻿namespace Demo.ViewModels
 {
-    public class ViewModelBase : ReactiveObject
+    public class ViewModelBase : ObservableObject
     {
     }
 }
