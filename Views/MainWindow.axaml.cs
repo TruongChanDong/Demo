@@ -40,5 +40,11 @@ namespace Demo.Views
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+        private void OnGoToSignUpClick(object sender, RoutedEventArgs e)
+        {
+            var signUpWindow = new SignUp();
+            signUpWindow.Show();
+            this.Close();
+        }
     }
 }
