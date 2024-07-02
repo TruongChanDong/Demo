@@ -1,18 +1,22 @@
 ﻿using Demo.Models;
+using Demo.Views;
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+
 
 namespace Demo.ViewModels
 {
     public partial class LoginViewModel : ViewModelBase
     {
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         private string? _userName;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         private string? _password;
 
         [ObservableProperty]
@@ -23,7 +27,7 @@ namespace Demo.ViewModels
             BaseAddress = new Uri("http://localhost:8080/"),
         };
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanLogin))]
         private async Task Login()
         {
             using StringContent jsonContent = new(
@@ -32,18 +36,13 @@ namespace Demo.ViewModels
                     phone = $"{UserName}",
                     password = $"{Password}"
                 }),
-                Encoding.UTF8,
-                "application/json");
-
-            using HttpResponseMessage response = await httpClient.PostAsync(
-                "login",
-                jsonContent);
-
-            response.EnsureSuccessStatusCode();
+                Encoding.UTF8,"application/json");
 
             var jsonResponse = new User();
             try
             {
+                using HttpResponseMessage response = await httpClient.PostAsync("login",jsonContent);
+                response.EnsureSuccessStatusCode();
                 jsonResponse = await response.Content.ReadFromJsonAsync<User>();
             }
             catch (Exception ex)
@@ -52,10 +51,17 @@ namespace Demo.ViewModels
                 jsonResponse = null;
             }
             if (jsonResponse != null) {
-                /*Message = $"Welcome back User: {jsonResponse.Name}\n" +
-                    $"User ID: {jsonResponse.UserId}";*/
-                Message = jsonResponse.ToString();
+                Message = "Login Success!";
+                Messenger.Send(new LoginEvent(1));
             }
         }
+
+        [RelayCommand]
+        private void Register() {
+            Messenger.Send(new LoginEvent(2));
+        }
+
+        private bool CanLogin() => !string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password);
+
     }
 }

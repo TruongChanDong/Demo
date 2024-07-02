@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Demo.Views.RegisterView"
+			 xmlns:vm="using:Demo.ViewModels"
+			 x:DataType="vm:RegisterViewModel">
+	<Design.DataContext>
+		<vm:RegisterViewModel />
+	</Design.DataContext>
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		<TextBlock Text="Sign Up" FontSize="24" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+		<TextBox x:Name="Username" Width="200" Watermark="User Name" Margin="0,0,0,10" Text="{Binding UserName}"/>
+		<TextBox x:Name="Phone" Width="200" Watermark="Phone number" Margin="0,0,0,10" Text="{Binding Phone}"/>
+		<TextBox x:Name="Email" Width="200" Watermark="Email" Margin="0,0,0,10" Text="{Binding Email}"/>
+		<TextBox x:Name="Address" Width="200" Watermark="Address" Margin="0,0,0,10" Text="{Binding Address}"/>
+		<TextBox x:Name="Password" Width="200" Watermark="Password" Margin="0,0,0,10" PasswordChar="*" Text="{Binding Password}"/>
+		<TextBox x:Name="ConfirmPassword" Width="200" Watermark="Confirm Password" Margin="0,0,0,20" PasswordChar="*" Text="{Binding ConfirmPassword}"/>
+		<Button Command="{Binding CreateUserCommand}" Content="Sign Up" Width="200" Margin="0,0,0,10" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+		<Button Command="{Binding GoToLoginCommand}" Content="Go back" Width="200" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+		<TextBlock x:Name="Message" Foreground="Red" Margin="0,10,0,0" HorizontalAlignment="Center" Text="{Binding Message}"/>
+	</StackPanel>
+</UserControl>
