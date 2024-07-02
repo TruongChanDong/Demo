@@ -1,0 +1,35 @@
+<UserControl
+    x:Class="Demo.Views.ListView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Demo.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:ListViewModel"
+    mc:Ignorable="d">
+    <Grid ColumnDefinitions="1*,8*">
+        <Button HorizontalAlignment="Center" Command="{Binding GetListItemCommand}">Get Users</Button>
+        <TextBlock
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            Foreground="Red"
+            Text="{Binding Message}" />
+        <DataGrid
+            Grid.Column="1"
+            Margin="20"
+            BorderBrush="Gray"
+            BorderThickness="1"
+            GridLinesVisibility="All"
+            IsReadOnly="True"
+            ItemsSource="{Binding UserList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
+                <DataGridTextColumn Binding="{Binding Phone}" Header="Phone" />
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

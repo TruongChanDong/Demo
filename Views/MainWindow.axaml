@@ -16,5 +16,7 @@
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
-    <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+    <Grid Margin="10" RowDefinitions="*,Auto">
+        <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+    </Grid>
 </Window>
