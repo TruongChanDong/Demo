@@ -5,156 +5,104 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Demo.ViewModels"
+    Margin="0"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="vm:RegisterViewModel"
-    mc:Ignorable="d"
-    Margin="0">
+    mc:Ignorable="d">
     <Design.DataContext>
         <vm:RegisterViewModel />
     </Design.DataContext>
 
-	<UserControl.Styles>
-		<Style Selector="TextBox">
-			<Setter Property="Width" Value="250"/>
-			<Setter Property="Margin" Value="0,0,0,15"/>
-			<Setter Property="FontFamily" Value="Segoe UI"/>
-			<Setter Property="FontSize" Value="14"/>
-			<Setter Property="Padding" Value="10,8"/>
-			<Setter Property="Background" Value="#FFFFFF"/>
-			<Setter Property="BorderBrush" Value="#BDC3C7"/>
-			<Setter Property="BorderThickness" Value="1"/>
-			<Setter Property="CornerRadius" Value="4"/>
-			<Setter Property="Transitions">
-				<Transitions>
-					<BrushTransition Property="BorderBrush" Duration="0:0:0.2"/>
-				</Transitions>
-			</Setter>
-		</Style>
-		<Style Selector="TextBox:focus">
-			<Setter Property="BorderBrush" Value="#3498DB"/>
-			<Setter Property="BorderThickness" Value="2"/>
-		</Style>
-		<Style Selector="TextBox:pointerover">
-			<Setter Property="BorderBrush" Value="#7F8C8D"/>
-		</Style>
-	</UserControl.Styles>
+    <Grid>
+        <Image Source="/Assets/iot2.jpg" Stretch="Fill" />
+        <Grid Margin="0" Background="#B0F0F4F8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-	<Grid>
-		<Image Source="/Assets/iot2.jpg"
-               Stretch="Fill" />
-		<Grid Background="#B0F0F4F8" Margin="0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+            <!--  Left side (Sign Up form)  -->
+            <Grid Grid.Column="1">
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="24"
+                        Foreground="Black"
+                        Text="Sign Up" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding UserName}"
+                        Watermark="User Name" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding Phone}"
+                        Watermark="Phone number" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding Email}"
+                        Watermark="Email" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding Address}"
+                        Watermark="Address" />
+                    <TextBox
+                        Classes="normalBox"
+                        PasswordChar="*"
+                        Text="{Binding Password}"
+                        Watermark="Password" />
+                    <TextBox
+                        Classes="normalBox"
+                        PasswordChar="*"
+                        Text="{Binding ConfirmPassword}"
+                        Watermark="Confirm Password" />
+                    <Button
+                        Classes="normalButton"
+                        Command="{Binding CreateUserCommand}"
+                        Content="Sign Up" />
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        Foreground="#E74C3C"
+                        Text="{Binding Message}" />
+                </StackPanel>
+            </Grid>
 
-			<!-- Left side (Sign Up form) -->
-			<Grid Grid.Column="1" >
-				<StackPanel HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							Margin="20">
-					<TextBlock Margin="0,0,0,20"
-							   HorizontalAlignment="Center"
-							   FontSize="24"
-							   Foreground="Black"
-							   FontFamily="Segoe UI"
-							   Text="Sign Up" />
-					<TextBox Text="{Binding UserName}"
-							 Watermark="User Name"/>
-					<TextBox Text="{Binding Phone}"
-							 Watermark="Phone number"/>
-					<TextBox Text="{Binding Email}"
-							 Watermark="Email"/>
-					<TextBox Text="{Binding Address}"
-							 Watermark="Address"/>
-					<TextBox PasswordChar="*"
-							 Text="{Binding Password}"
-							 Watermark="Password"/>
-					<TextBox PasswordChar="*"
-							 Text="{Binding ConfirmPassword}"
-							 Watermark="Confirm Password"/>
-					<Button Width="250"
-							Margin="0,0,0,10"
-							HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Command="{Binding CreateUserCommand}"
-							Content="Sign Up"
-							Background="#2ECC71"
-							Foreground="White"
-							FontSize="16"
-							CornerRadius="4"
-							FontFamily="Segoe UI"
-							BorderThickness="1">
-						<Button.Styles>
-							<Style Selector="Button">
-								<Setter Property="Transitions">
-									<Transitions>
-										<BrushTransition Property="Background" Duration="0:0:0.2"/>
-									</Transitions>
-								</Setter>
-							</Style>
-							<Style Selector="Button:pointerover">
-								<Setter Property="Background" Value="#2980B9"/>
-								<Setter Property="Cursor" Value="Hand"/>
-							</Style>
-						</Button.Styles>
-					</Button>
-					<TextBlock Margin="0,10,0,0"
-							   HorizontalAlignment="Center"
-							   Foreground="#E74C3C"
-							   FontFamily="Segoe UI"
-							   Text="{Binding Message}" />
-				</StackPanel>
-			</Grid>
-
-			<!-- Right side (Go back button and text) -->
-			<Grid Grid.Column="0" Background="#B0F0F4F8">
-				<StackPanel HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							Margin="20">
-					<TextBlock Margin="0,0,0,20"
-							   HorizontalAlignment="Center"
-							   FontSize="24"
-							   FontWeight="Bold"
-							   TextAlignment="Center"
-							   Foreground="Black"
-							   FontFamily="Segoe UI"
-							   Text="Already have an account?" />
-					<TextBlock Margin="0,0,0,10"
-							   HorizontalAlignment="Center"
-							   FontSize="14"
-							   TextWrapping="Wrap"
-							   Foreground="Black"
-							   FontFamily="Segoe UI"
-							   Text="Log in to access your account and start using our services." />
-					<Button Width="200"
-							Margin="0,20,0,10"
-							HorizontalAlignment="Center"
-							HorizontalContentAlignment="Center"
-							Command="{Binding GoToLoginCommand}"
-							Content="Go back to Login"
-							Background="#2ECC71"
-							Foreground="White"
-							FontSize="16"
-							FontFamily="Segoe UI"
-							BorderThickness="1">
-						<Button.Styles>
-							<Style Selector="Button">
-								<Setter Property="Transitions">
-									<Transitions>
-										<BrushTransition Property="Background" Duration="0:0:0.2"/>
-									</Transitions>
-								</Setter>
-							</Style>
-							<Style Selector="Button:pointerover">
-								<Setter Property="Background" Value="#2980B9"/>
-								<Setter Property="Cursor" Value="Hand"/>
-							</Style>
-						</Button.Styles>
-					</Button>
-				</StackPanel>
-			</Grid>
-		</Grid>
-	</Grid>
+            <!--  Right side (Go back button and text)  -->
+            <Grid Grid.Column="0" Background="#B0F0F4F8">
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                        Text="Already have an account?"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="Log in to access your account and start using our services."
+                        TextWrapping="Wrap" />
+                    <Button
+                        Classes="normalButton"
+                        Command="{Binding GoToLoginCommand}"
+                        Content="Go back to Login" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

@@ -1,5 +1,4 @@
 ﻿using Demo.Models;
-using Demo.Views;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -12,11 +11,9 @@ namespace Demo.ViewModels
     public partial class LoginViewModel : ViewModelBase
     {
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         private string? _userName;
 
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         private string? _password;
 
         [ObservableProperty]
@@ -27,7 +24,7 @@ namespace Demo.ViewModels
             BaseAddress = new Uri("http://localhost:8080/"),
         };
 
-        [RelayCommand(CanExecute = nameof(CanLogin))]
+        [RelayCommand]
         private async Task Login()
         {
             using StringContent jsonContent = new(
@@ -52,16 +49,13 @@ namespace Demo.ViewModels
             }
             if (jsonResponse != null) {
                 Message = "Login Success!";
-                Messenger.Send(new LoginEvent(1));
+                Messenger.Send(new LoginEvent(new LoginViewModel()));
             }
         }
 
         [RelayCommand]
         private void Register() {
-            Messenger.Send(new LoginEvent(2));
+            Messenger.Send(new LoginEvent(new RegisterViewModel()));
         }
-
-        private bool CanLogin() => !string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password);
-
     }
 }

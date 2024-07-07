@@ -66,7 +66,7 @@ namespace Demo.ViewModels
             if (jsonResponse.Contains("Created account"))
             {
                 jsonResponse = "Sign Up Success!";
-                Messenger.Send(new LoginEvent(0));
+                Messenger.Send(new LoginEvent(new LoginViewModel()));
             }
             Message = jsonResponse;
         }
@@ -74,7 +74,7 @@ namespace Demo.ViewModels
         [RelayCommand]
         private void GoToLogin()
         {
-            Messenger.Send(new LoginEvent(0));
+            Messenger.Send(new LoginEvent(new LoginViewModel()));
         }
     }
 }
