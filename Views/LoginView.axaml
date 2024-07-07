@@ -8,7 +8,7 @@
     d:DesignHeight="450"
     x:DataType="vm:LoginViewModel"
     mc:Ignorable="d"
-	 Margin="0">
+    Margin="0">
 	<Design.DataContext>
 		<vm:LoginViewModel />
 	</Design.DataContext>
@@ -38,107 +38,112 @@
 			<Setter Property="BorderBrush" Value="#7F8C8D"/>
 		</Style>
 	</UserControl.Styles>
-	
-	<Grid Background="#F0F4F8" Margin="0">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
 
-		<!-- Left side (Register button and text) -->
-		<Grid Grid.Column="0" Background="#F0F4F8">
-			<StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Margin="20">
-				<TextBlock Margin="0,0,0,20"
-                           HorizontalAlignment="Center"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           TextAlignment="Center"
-                           Foreground="Black"
-                           FontFamily="Segoe UI"
-                           Text="Create an Account" />
-				<TextBlock Margin="0,0,0,10"
-                           HorizontalAlignment="Center"
-                           FontSize="14"
-                           TextWrapping="Wrap"
-                           Foreground="Black"
-                           FontFamily="Segoe UI"
-                           Text="Please fill out the form below to create your account." />
-				<Button Width="200"
-                        Margin="0,20,0,10"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Command="{Binding RegisterCommand}"
-                        Content="Register"
-                        Background="#2ECC71"
-                        Foreground="White"
-                        FontSize="16"
-                        FontFamily="Segoe UI"
-                        BorderThickness="1">
-					<Button.Styles>
-						<Style Selector="Button">
-							<Setter Property="Transitions">
-								<Transitions>
-									<BrushTransition Property="Background" Duration="0:0:0.2"/>
-								</Transitions>
-							</Setter>
-						</Style>
-						<Style Selector="Button:pointerover">
-							<Setter Property="Background" Value="#FF7F00"/>
-							<Setter Property="Cursor" Value="Hand"/>
-						</Style>
-					</Button.Styles>
-				</Button>
-			</StackPanel>
-		</Grid>
+	<Grid>
+		<Image Source="/Assets/iot2.jpg"
+               Stretch="Fill" />
 
-		<!-- Right side (Login form) -->
-		<Grid Grid.Column="1" Background="#FFFFFF">
-			<StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Margin="20">
-				<TextBlock Margin="0,0,0,20"
-                           HorizontalAlignment="Center"
-                           FontSize="24"
-                           Foreground="Black"
-                           FontFamily="Segoe UI"
-                           Text="Login to your account" />
-				<TextBox Text="{Binding UserName}"
-                         Watermark="Phone Number"/>
-				<TextBox PasswordChar="*"
-                         Text="{Binding Password}"
-                         Watermark="Password"/>
-				<Button Width="250"
-                        Margin="0,0,0,10"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        Command="{Binding LoginCommand}"
-                        Content="Login"
-                        Background="#2ECC71"
-                        Foreground="White"
-                        FontSize="16"
-                        FontFamily="Segoe UI">
-					<Button.Styles>
-                        <Style Selector="Button">
-                            <Setter Property="Transitions">
-                                <Transitions>
-                                    <BrushTransition Property="Background" Duration="0:0:0.2"/>
-                                </Transitions>
-                            </Setter>
-                        </Style>
-                        <Style Selector="Button:pointerover">
-                            <Setter Property="Background" Value="#FF7F00"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Style>
-                    </Button.Styles>
-				</Button>
-				<TextBlock Margin="0,10,0,0"
-                           HorizontalAlignment="Center"
-                           Foreground="#E74C3C"
-                           FontFamily="Segoe UI"
-                           Text="{Binding Message}" />
-			</StackPanel>
+		<Grid Background="#B0F0F4F8">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<!-- Left side (Register button and text) -->
+			<Grid Grid.Column="0"  Background="#B0F0F4F8">
+				<StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="20">
+					<TextBlock Margin="0,0,0,20"
+                               HorizontalAlignment="Center"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               TextAlignment="Center"
+                               Foreground="Black"
+                               FontFamily="Segoe UI"
+                               Text="Create an Account" />
+					<TextBlock Margin="0,0,0,10"
+                               HorizontalAlignment="Center"
+                               FontSize="14"
+                               TextWrapping="Wrap"
+                               Foreground="Black"
+                               FontFamily="Segoe UI"
+                               Text="Please fill out the form below to create your account." />
+					<Button Width="200"
+                            Margin="0,20,0,10"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding RegisterCommand}"
+                            Content="Register"
+                            Background="#2ECC71"
+                            Foreground="White"
+                            FontSize="16"
+                            FontFamily="Segoe UI"
+                            BorderThickness="1">
+						<Button.Styles>
+							<Style Selector="Button">
+								<Setter Property="Transitions">
+									<Transitions>
+										<BrushTransition Property="Background" Duration="0:0:0.2"/>
+									</Transitions>
+								</Setter>
+							</Style>
+							<Style Selector="Button:pointerover">
+								<Setter Property="Background" Value="#FF7F00"/>
+								<Setter Property="Cursor" Value="Hand"/>
+							</Style>
+						</Button.Styles>
+					</Button>
+				</StackPanel>
+			</Grid>
+
+			<!-- Right side (Login form) -->
+			<Grid Grid.Column="1" >
+				<StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="20">
+					<TextBlock Margin="0,0,0,20"
+                               HorizontalAlignment="Center"
+                               FontSize="24"
+                               Foreground="Black"
+                               FontFamily="Segoe UI"
+                               Text="Login to your account" />
+					<TextBox Text="{Binding UserName}"
+                             Watermark="Phone Number"/>
+					<TextBox PasswordChar="*"
+                             Text="{Binding Password}"
+                             Watermark="Password"/>
+					<Button Width="250"
+                            Margin="0,0,0,10"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding LoginCommand}"
+                            Content="Login"
+                            Background="#2ECC71"
+                            Foreground="White"
+                            FontSize="16"
+                            FontFamily="Segoe UI">
+						<Button.Styles>
+							<Style Selector="Button">
+								<Setter Property="Transitions">
+									<Transitions>
+										<BrushTransition Property="Background" Duration="0:0:0.2"/>
+									</Transitions>
+								</Setter>
+							</Style>
+							<Style Selector="Button:pointerover">
+								<Setter Property="Background" Value="#FF7F00"/>
+								<Setter Property="Cursor" Value="Hand"/>
+							</Style>
+						</Button.Styles>
+					</Button>
+					<TextBlock Margin="0,10,0,0"
+                               HorizontalAlignment="Center"
+                               Foreground="#E74C3C"
+                               FontFamily="Segoe UI"
+                               Text="{Binding Message}" />
+				</StackPanel>
+			</Grid>
 		</Grid>
 	</Grid>
 </UserControl>
