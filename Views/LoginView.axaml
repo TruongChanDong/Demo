@@ -5,47 +5,88 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Demo.ViewModels"
+    Margin="0"
     d:DesignHeight="450"
-    d:DesignWidth="800"
     x:DataType="vm:LoginViewModel"
     mc:Ignorable="d">
     <Design.DataContext>
         <vm:LoginViewModel />
     </Design.DataContext>
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock
-            Margin="0,0,0,20"
-            HorizontalAlignment="Center"
-            FontSize="24"
-            Text="Login to your account" />
-        <TextBox
-            Width="200"
-            Margin="0,0,0,10"
-            Text="{Binding UserName}"
-            Watermark="Phone Number" />
-        <TextBox
-            Width="200"
-            Margin="0,0,0,30"
-            PasswordChar="*"
-            Text="{Binding Password}"
-            Watermark="Password" />
-        <Button
-            Width="200"
-			Margin="0,0,0,10"
-            HorizontalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Command="{Binding LoginCommand}"
-            Content="Login" />
-		<Button
-            Width="200"
-            HorizontalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Command="{Binding RegisterCommand}"
-            Content="Register" />
-        <TextBlock
-            Margin="0,10,0,0"
-            HorizontalAlignment="Center"
-            Foreground="Red"
-            Text="{Binding Message}" />
-    </StackPanel>
+
+    <Grid>
+        <Image Source="/Assets/iot2.jpg" Stretch="Fill" />
+
+        <Grid Background="#B0F0F4F8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Left side (Register button and text)  -->
+            <Grid Grid.Column="0" Background="#B0F0F4F8">
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                        Text="Create an Account"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="Please fill out the form below to create your account."
+                        TextWrapping="Wrap" />
+                    <Button
+                        Classes="normalButton"
+                        Command="{Binding RegisterCommand}"
+                        Content="Register" />
+                </StackPanel>
+            </Grid>
+
+            <!--  Right side (Login form)  -->
+            <Grid Grid.Column="1">
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="24"
+                        Foreground="Black"
+                        Text="Login to your account" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding UserName}"
+                        Watermark="Phone Number" />
+                    <TextBox
+                        Classes="normalBox"
+                        PasswordChar="*"
+                        Text="{Binding Password}"
+                        Watermark="Password" />
+                    <Button
+                        Classes="normalButton"
+                        Command="{Binding LoginCommand}"
+                        Content="Login" />
+
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        Foreground="#E74C3C"
+                        Text="{Binding Message}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

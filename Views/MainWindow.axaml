@@ -6,15 +6,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Demo.ViewModels"
     Title="Demo"
+    Padding="0"
+    Height="600"
+    Height="600"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="500"
     x:DataType="vm:MainWindowViewModel"
+    ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/avalonia-logo.ico"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Design.DataContext>
-        <vm:MainWindowViewModel />
+    <TransitioningContentControl Content="{Binding CurrentViewModel}" />
     </Design.DataContext>
-    <Grid Margin="10" RowDefinitions="*,Auto">
-        <TransitioningContentControl Content="{Binding CurrentViewModel}" />
-    </Grid>
+    <TransitioningContentControl Content="{Binding CurrentViewModel}" />
 </Window>

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Demo.ViewModels"
+    Margin="0"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="vm:RegisterViewModel"
@@ -12,68 +13,96 @@
     <Design.DataContext>
         <vm:RegisterViewModel />
     </Design.DataContext>
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock
-            Margin="0,0,0,20"
-            HorizontalAlignment="Center"
-            FontSize="24"
-            Text="Sign Up" />
-        <TextBox
-            x:Name="Username"
-            Width="200"
-            Margin="0,0,0,10"
-            Text="{Binding UserName}"
-            Watermark="User Name" />
-        <TextBox
-            x:Name="Phone"
-            Width="200"
-            Margin="0,0,0,10"
-            Text="{Binding Phone}"
-            Watermark="Phone number" />
-        <TextBox
-            x:Name="Email"
-            Width="200"
-            Margin="0,0,0,10"
-            Text="{Binding Email}"
-            Watermark="Email" />
-        <TextBox
-            x:Name="Address"
-            Width="200"
-            Margin="0,0,0,10"
-            Text="{Binding Address}"
-            Watermark="Address" />
-        <TextBox
-            x:Name="Password"
-            Width="200"
-            Margin="0,0,0,10"
-            PasswordChar="*"
-            Text="{Binding Password}"
-            Watermark="Password" />
-        <TextBox
-            x:Name="ConfirmPassword"
-            Width="200"
-            Margin="0,0,0,20"
-            PasswordChar="*"
-            Text="{Binding ConfirmPassword}"
-            Watermark="Confirm Password" />
-        <Button
-            Width="200"
-            Margin="0,0,0,10"
-            HorizontalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Command="{Binding CreateUserCommand}"
-            Content="Sign Up" />
-        <Button
-            Width="200"
-            HorizontalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Command="{Binding GoToLoginCommand}"
-            Content="Go back" />
-        <TextBlock
-            x:Name="Message"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Center"
-            Foreground="Red"
-            Text="{Binding Message}" />
-    </StackPanel>
+
+    <Grid>
+        <Image Source="/Assets/iot2.jpg" Stretch="Fill" />
+        <Grid Margin="0" Background="#B0F0F4F8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Left side (Sign Up form)  -->
+            <Grid Grid.Column="1">
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="24"
+                        Foreground="Black"
+                        Text="Sign Up" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding UserName}"
+                        Watermark="User Name" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding Phone}"
+                        Watermark="Phone number" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding Email}"
+                        Watermark="Email" />
+                    <TextBox
+                        Classes="normalBox"
+                        Text="{Binding Address}"
+                        Watermark="Address" />
+                    <TextBox
+                        Classes="normalBox"
+                        PasswordChar="*"
+                        Text="{Binding Password}"
+                        Watermark="Password" />
+                    <TextBox
+                        Classes="normalBox"
+                        PasswordChar="*"
+                        Text="{Binding ConfirmPassword}"
+                        Watermark="Confirm Password" />
+                    <Button
+                        Classes="normalButton"
+                        Command="{Binding CreateUserCommand}"
+                        Content="Sign Up" />
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        Foreground="#E74C3C"
+                        Text="{Binding Message}" />
+                </StackPanel>
+            </Grid>
+
+            <!--  Right side (Go back button and text)  -->
+            <Grid Grid.Column="0" Background="#B0F0F4F8">
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                        Text="Already have an account?"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI"
+                        FontSize="14"
+                        Foreground="Black"
+                        Text="Log in to access your account and start using our services."
+                        TextWrapping="Wrap" />
+                    <Button
+                        Classes="normalButton"
+                        Command="{Binding GoToLoginCommand}"
+                        Content="Go back to Login" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

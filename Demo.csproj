@@ -10,9 +10,10 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <None Remove="Assets\iot2.jpg" />
 	  <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
 	  <Using Include="CommunityToolkit.Mvvm.Input" />
-	  <Using Include="System.Net.Http.Json"/>
+	  <Using Include="System.Net.Http.Json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,7 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
   </ItemGroup>
 </Project>

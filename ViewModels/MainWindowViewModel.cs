@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Demo.ViewModels;
 
 namespace Demo.ViewModels
 {
@@ -15,21 +16,10 @@ namespace Demo.ViewModels
 
         public void Receive(LoginEvent message)
         {
-            if (message.EventIndex == 0)
-            {
-                CurrentViewModel = new LoginViewModel();
-            }
-            if(message.EventIndex == 1)
-            {
-                CurrentViewModel = new ListViewModel();
-            }
-            if (message.EventIndex == 2)
-            {
-                CurrentViewModel = new RegisterViewModel();
-            }
+            CurrentViewModel = message.model;
         }
     }
 }
 
-public record class LoginEvent(int? EventIndex);
+public record class LoginEvent(ViewModelBase model);
 
