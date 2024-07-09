@@ -5,10 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Demo.ViewModels"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="600"
+    d:DesignWidth="1000"
     x:DataType="vm:ListViewModel"
     mc:Ignorable="d">
+    <!--
     <Grid ColumnDefinitions="1*,8*">
         <Button HorizontalAlignment="Center" Command="{Binding GetListItemCommand}">Get Users</Button>
         <TextBlock
@@ -32,4 +33,367 @@
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
+	-->
+    <Border Background="#eff2f7" CornerRadius="30">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--  Left menu  -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  Menu icon  -->
+                <Button
+                    Margin="20,28,0,35"
+                    Background="Transparent"
+                    CornerRadius="50">
+                    <PathIcon Data="{StaticResource apps_list_regular}" />
+                </Button>
+
+                <Border
+                    Grid.Row="1"
+                    Background="#623ed0"
+                    CornerRadius="0 50 0 50">
+                    <DockPanel>
+                        <!--  Menu logo  -->
+                        <Border
+                            Width="80"
+                            Height="80"
+                            Margin="20,-30,0,0"
+                            Padding="3"
+                            HorizontalAlignment="Left"
+                            Background="White"
+                            CornerRadius="100"
+                            DockPanel.Dock="Top">
+                            <Ellipse>
+                                <Ellipse.Fill>
+                                    <ImageBrush Source="/Assets/user.png" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Border>
+                        <!--  Menu Titles  -->
+                        <TextBlock
+                            Margin="5,10,0,10"
+                            Classes="titleText"
+                            DockPanel.Dock="Top"
+                            FontSize="22"
+                            Text="Welcom User" />
+                        <TextBlock
+                            Margin="5,10,0,10"
+                            Classes="titleText"
+                            DockPanel.Dock="Top"
+                            FontSize="14"
+                            Text="Welcom User" />
+                        <!--  Menu Seperator  -->
+                        <Separator
+                            Height="0.8"
+                            Margin="25"
+                            Background="#7e5fdc"
+                            DockPanel.Dock="Top" />
+                        <!--  Menu Seperator  -->
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Classes="menuButton">
+                                <StackPanel Orientation="Horizontal">
+                                    <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
+                                    <TextBlock Margin="10,0,0,0" Text="Profile" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Classes="menuButton">
+                                <StackPanel Orientation="Horizontal">
+                                    <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
+                                    <TextBlock Margin="10,0,0,0" Text="Profile" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Classes="menuButton">
+                                <StackPanel Orientation="Horizontal">
+                                    <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
+                                    <TextBlock Margin="10,0,0,0" Text="Profile" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Classes="menuButton">
+                                <StackPanel Orientation="Horizontal">
+                                    <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
+                                    <TextBlock Margin="10,0,0,0" Text="Profile" />
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+
+                        <Button
+                            Margin="15,0,15,20"
+                            VerticalAlignment="Bottom"
+                            Classes="menuButton"
+                            DockPanel.Dock="Bottom">
+                            <StackPanel Orientation="Horizontal">
+
+                                <PathIcon Data="{StaticResource backspace_regular}" Foreground="white" />
+                                <TextBlock Margin="10,0,0,0" Text="Logout" />
+                            </StackPanel>
+                        </Button>
+
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <!--  Main Section  -->
+            <Grid Grid.Column="1" Margin="30,20,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Search Textbox  -->
+
+                <Grid Width="300" HorizontalAlignment="Left">
+                    <TextBlock
+                        Margin="20,0"
+                        VerticalAlignment="Center"
+                        Foreground="#b0b9c6"
+                        IsHitTestVisible="False"
+                        Text="Search here ..." />
+
+                    <TextBox
+                        Background="Transparent"
+                        Classes="textBoxSearch"
+                        CornerRadius="20" />
+
+                    <PathIcon
+                        Margin="0,0,20,0"
+                        HorizontalAlignment="Right"
+                        Data="{StaticResource search_regular}"
+                        Foreground="#b0b9c6" />
+                </Grid>
+
+                <!--  Top Button  -->
+                <Button
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
+                    Background="#dcdcdc"
+                    Classes="topButton">
+                    <PathIcon
+                        HorizontalAlignment="Right"
+                        Data="{StaticResource settings_regular}"
+                        Foreground="#b0b9c6" />
+                </Button>
+
+                <Button
+                    Margin="0,0,55,0"
+                    HorizontalAlignment="Right"
+                    Background="#dcdcdc"
+                    Classes="topButton">
+
+                    <PathIcon
+                        HorizontalAlignment="Right"
+                        Data="{StaticResource settings_regular}"
+                        Foreground="#b0b9c6" />
+                </Button>
+
+                <!--  Page Title  -->
+                <TextBlock
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Classes="titleText"
+                    FontSize="30"
+                    Foreground="Black"
+                    Text="All User" />
+
+                <!--  Button  -->
+                <Button
+                    Grid.Row="1"
+                    Width="120"
+                    HorizontalAlignment="Right"
+                    Classes="addButton"
+                    Command="{Binding GetListItemCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <PathIcon
+                            Width="11"
+                            Height="11"
+                            Margin="0,1,8,0"
+                            VerticalAlignment="Center"
+                            Data="{StaticResource add_regular}"
+                            Foreground="white" />
+                        <TextBlock Margin="10,0,0,0" Text="Add User" />
+                    </StackPanel>
+                </Button>
+
+                <!--  Seperator  -->
+                <Separator
+                    Grid.Row="3"
+                    Height="0.8"
+                    Margin="0,10"
+                    Background="#7e5fdc" />
+
+                <!--  Tab Button  -->
+                <StackPanel
+                    Grid.Row="2"
+                    Margin="0,10,0,0"
+                    Orientation="Horizontal">
+                    <Button
+                        BorderBrush="#784ff2"
+                        Classes="tabButton"
+                        Content="User" />
+                    <Button Classes="tabButton" Content="VIP" />
+                    <Button Classes="tabButton" Content="Staff" />
+                </StackPanel>
+
+                <!--  Counter Title  -->
+                <TextBlock
+                    Grid.Row="4"
+                    HorizontalAlignment="Left"
+                    Classes="counterText"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    Foreground="Black"
+                    Text="Total User: 12" />
+
+                <TextBlock
+                    Grid.Row="4"
+                    Margin="0,0,220,0"
+                    HorizontalAlignment="Right"
+                    Classes="counterText"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    Foreground="Black"
+                    Text="Filter by" />
+
+                <!--  Filter Textbox  -->
+
+                <Grid
+                    Grid.Row="4"
+                    Width="200"
+                    Margin="0,-25"
+                    HorizontalAlignment="Right">
+                    <TextBlock
+                        Margin="15,0"
+                        VerticalAlignment="Center"
+                        Foreground="#b0b9c6"
+                        IsHitTestVisible="False"
+                        Text="Search here ..." />
+
+                    <TextBox
+                        Background="Transparent"
+                        Classes="textBoxSearch"
+                        CornerRadius="20" />
+
+                    <PathIcon
+                        Margin="0,0,20,0"
+                        HorizontalAlignment="Right"
+                        Data="{StaticResource search_regular}"
+                        Foreground="#b0b9c6" />
+                </Grid>
+                <!--  Data Grid VIP
+                <DataGrid Grid.Row="5" ItemsSource="{Binding UserList}">
+
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Width="auto" CanUserResize="False">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox />
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn
+                            Width="auto"
+                            CanUserResize="False"
+                            Header="#"
+                            IsReadOnly="True" />
+                        <DataGridTextColumn
+                            Width="*"
+                            CanUserResize="False"
+                            Header="User"
+                            IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate />
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>-->
+                <!--  Data Grid  Demo  -->
+                <DataGrid
+                    Grid.Row="5"
+                    Margin="0,10"
+                    BorderBrush="#dee4ec"
+                    BorderThickness="1"
+                    GridLinesVisibility="All"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding UserList}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                        <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
+                        <DataGridTextColumn Binding="{Binding Phone}" Header="Phone" />
+                        <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!--  Paging Button  -->
+
+                <TextBlock
+                    Grid.Row="6"
+                    Margin="0,10,10,10"
+                    Padding="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Foreground="Red"
+                    Text="{Binding Message}" />
+
+                <!--  Paging Button  -->
+                <Border
+                    Grid.Row="6"
+                    Margin="0,10,10,10"
+                    Padding="5"
+                    HorizontalAlignment="Right"
+                    Background="White"
+                    BorderBrush="#dee4ec"
+                    BorderThickness="1"
+                    CornerRadius="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Background="Transparent">
+                            <PathIcon Data="{StaticResource previous_regular}" Foreground="#b0b9c6" />
+                        </Button>
+                        <Rectangle
+                            Width="1"
+                            Margin="3,7"
+                            Fill="#dee4ec" />
+                        <Button Classes="pagingButton" Content="1" />
+                        <Button
+                            Background="#7950fe"
+                            Classes="pagingButton"
+                            Content="2"
+                            Foreground="White" />
+                        <Button Classes="pagingButton" Content="3" />
+
+                        <Button Classes="pagingButton" Content="..." />
+
+
+                        <Button Classes="pagingButton" Content="7" />
+                        <Button Classes="pagingButton" Content="8" />
+                        <Button Classes="pagingButton" Content="9" />
+                        <Rectangle
+                            Width="1"
+                            Margin="3,7"
+                            Fill="#dee4ec" />
+                        <Button Background="Transparent">
+                            <PathIcon Data="{StaticResource next_regular}" Foreground="#b0b9c6" />
+                        </Button>
+                    </StackPanel>
+
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
 </UserControl>

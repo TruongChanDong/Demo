@@ -10,7 +10,7 @@ namespace Demo.ViewModels
 
         public MainWindowViewModel()
         {
-            CurrentViewModel = new LoginViewModel();
+            CurrentViewModel = new ListViewModel();
             Messenger.RegisterAll(this);
         }
 

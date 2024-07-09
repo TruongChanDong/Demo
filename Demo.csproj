@@ -11,6 +11,8 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove="Assets\iot2.jpg" />
+    <None Remove="Assets\logout.png" />
+    <None Remove="Assets\user.png" />
 	  <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
 	  <Using Include="CommunityToolkit.Mvvm.Input" />
 	  <Using Include="System.Net.Http.Json" />
