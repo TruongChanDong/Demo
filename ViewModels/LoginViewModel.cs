@@ -35,27 +35,27 @@ namespace Demo.ViewModels
                 }),
                 Encoding.UTF8,"application/json");
 
-            var jsonResponse = new User();
+            var user = new User();
             try
             {
                 using HttpResponseMessage response = await httpClient.PostAsync("login",jsonContent);
                 response.EnsureSuccessStatusCode();
-                jsonResponse = await response.Content.ReadFromJsonAsync<User>();
+                user = await response.Content.ReadFromJsonAsync<User>();
             }
             catch (Exception ex)
             {
                 Message = "Invalid Username or Password!";
-                jsonResponse = null;
+                user = null;
             }
-            if (jsonResponse != null) {
+            if (user != null) {
                 Message = "Login Success!";
-                Messenger.Send(new LoginEvent(new LoginViewModel()));
+                Messenger.Send(new LoginEvent(new ListViewModel(),user));
             }
         }
 
         [RelayCommand]
         private void Register() {
-            Messenger.Send(new LoginEvent(new RegisterViewModel()));
+            Messenger.Send(new LoginEvent(new RegisterViewModel(),null));
         }
     }
 }

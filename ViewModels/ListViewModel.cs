@@ -1,4 +1,5 @@
-﻿using Demo.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Demo.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,18 +12,40 @@ using System.Threading.Tasks;
 
 namespace Demo.ViewModels
 {
-    public partial class ListViewModel : ViewModelBase
+    public partial class ListViewModel : ViewModelBase, IRecipient<LoginEvent>
     {
         [ObservableProperty]
         public ObservableCollection<User> _userList = new();
 
         [ObservableProperty]
+        public string? _userName;
+
+        [ObservableProperty]
+        public string? _email;
+
+        [ObservableProperty]
         public string? _message;
+
+        public ListViewModel() {
+            UserName = "Username";
+            Email = "Email";
+            Messenger.RegisterAll(this);
+        }
+
+        public void Receive(LoginEvent message)
+        {
+            if (message.user != null)
+            {
+                UserName = message.user.Name;
+                Email = message.user.Email;
+            }
+        }
 
         private static HttpClient httpClient = new()
         {
             BaseAddress = new Uri("http://localhost:8080/"),
         };
+
 
         [RelayCommand]
         public async Task GetListItem()
@@ -44,5 +67,16 @@ namespace Demo.ViewModels
             }
         }
 
+        [RelayCommand]
+        public void LogOut()
+        {
+            Messenger.Send(new LoginEvent(new LoginViewModel(),null));
+        }
+
+        [RelayCommand]
+        public void Demo()
+        {
+            Messenger.Send(new LoginEvent(new RealTimeChartViewModel(),null));
+        }
     }
 }

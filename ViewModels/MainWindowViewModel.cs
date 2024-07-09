@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Demo.Models;
 using Demo.ViewModels;
 
 namespace Demo.ViewModels
@@ -10,7 +11,7 @@ namespace Demo.ViewModels
 
         public MainWindowViewModel()
         {
-            CurrentViewModel = new ListViewModel();
+            CurrentViewModel = new LoginViewModel();
             Messenger.RegisterAll(this);
         }
 
@@ -21,5 +22,5 @@ namespace Demo.ViewModels
     }
 }
 
-public record class LoginEvent(ViewModelBase model);
+public record class LoginEvent(ViewModelBase model, User user);
 

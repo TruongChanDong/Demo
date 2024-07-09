@@ -82,13 +82,13 @@
                             Classes="titleText"
                             DockPanel.Dock="Top"
                             FontSize="22"
-                            Text="Welcom User" />
+                            Text="{Binding UserName}" />
                         <TextBlock
                             Margin="5,10,0,10"
                             Classes="titleText"
                             DockPanel.Dock="Top"
                             FontSize="14"
-                            Text="Welcom User" />
+                            Text="{Binding Email}" />
                         <!--  Menu Seperator  -->
                         <Separator
                             Height="0.8"
@@ -97,7 +97,7 @@
                             DockPanel.Dock="Top" />
                         <!--  Menu Seperator  -->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Classes="menuButton">
+                            <Button Classes="menuButton" Command="{Binding DemoCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
                                     <TextBlock Margin="10,0,0,0" Text="Profile" />
@@ -131,9 +131,9 @@
                             Margin="15,0,15,20"
                             VerticalAlignment="Bottom"
                             Classes="menuButton"
+                            Command="{Binding LogOutCommand}"
                             DockPanel.Dock="Bottom">
                             <StackPanel Orientation="Horizontal">
-
                                 <PathIcon Data="{StaticResource backspace_regular}" Foreground="white" />
                                 <TextBlock Margin="10,0,0,0" Text="Logout" />
                             </StackPanel>
