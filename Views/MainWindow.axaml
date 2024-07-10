@@ -11,5 +11,10 @@
     Icon="/Assets/avalonia-logo.ico"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+
+    <TransitioningContentControl Content="{Binding CurrentViewModel}">
+        <TransitioningContentControl.PageTransition>
+            <CrossFade Duration="0:00:01" />
+        </TransitioningContentControl.PageTransition>
+    </TransitioningContentControl>
 </Window>
