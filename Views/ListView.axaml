@@ -97,17 +97,17 @@
                             DockPanel.Dock="Top" />
                         <!--  Menu Seperator  -->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Classes="menuButton" Command="{Binding DemoCommand}">
+                            <Button Classes="menuButton" Command="{Binding BarChartCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
-                                    <TextBlock Margin="10,0,0,0" Text="Profile" />
+                                    <TextBlock Margin="10,0,0,0" Text="Bar Chart" />
                                 </StackPanel>
                             </Button>
 
-                            <Button Classes="menuButton">
+                            <Button Classes="menuButton" Command="{Binding ColumnChartCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <PathIcon Data="{StaticResource person_regular}" Foreground="white" />
-                                    <TextBlock Margin="10,0,0,0" Text="Profile" />
+                                    <TextBlock Margin="10,0,0,0" Text="Column Chart" />
                                 </StackPanel>
                             </Button>
 

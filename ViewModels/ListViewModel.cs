@@ -30,12 +30,12 @@ namespace Demo.ViewModels
         public int? _count;
 
         [ObservableProperty]
-        public ViewModelBase _currentView;
-
+        public RealTimeChartViewModel _currentView;
+        
         public ListViewModel() {
             UserName = "Username";
             Email = "Email";
-            CurrentView = new RealTimeChartViewModel();
+            CurrentView = new RealTimeChartViewModel(0);
             Messenger.RegisterAll(this);
         }
 
@@ -82,9 +82,17 @@ namespace Demo.ViewModels
         }
 
         [RelayCommand]
-        public void Demo()
+        public void BarChart()
         {
-            Messenger.Send(new LoginEvent(new RealTimeChartViewModel(),null));
+            CurrentView.IsReading = false;
+            CurrentView = new RealTimeChartViewModel(0);
+        }
+
+        [RelayCommand]
+        public void ColumnChart()
+        {
+            CurrentView.IsReading = false;
+            CurrentView = new RealTimeChartViewModel(1);
         }
     }
 }

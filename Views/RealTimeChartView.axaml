@@ -14,7 +14,8 @@
         <vm:RealTimeChartViewModel />
     </UserControl.DataContext>
     <lvc:CartesianChart
+        LegendPosition="Bottom"
         Series="{Binding Series}"
-        SyncContext="{Binding Sync}"
         XAxes="{Binding XAxes}" />
+
 </UserControl>

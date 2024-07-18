@@ -17,6 +17,7 @@ namespace Demo.ViewModels
 
         public void Receive(LoginEvent message)
         {
+            CurrentViewModel = null;
             CurrentViewModel = message.model;
         }
     }

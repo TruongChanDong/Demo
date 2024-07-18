@@ -9,9 +9,9 @@ namespace Demo.Models
     internal class TestData
     {
         public DateTime timestamp { get; set; }
-        public string x { get; set; }
-        public string y { get; set; }
-        public string z { get; set; }
+        public double x { get; set; }
+        public double y { get; set; }
+        public double z { get; set; }
 
         public override string? ToString()
         {

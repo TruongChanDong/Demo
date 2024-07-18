@@ -8,33 +8,106 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.WebSockets;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Demo.Services;
 using Demo.Models;
-using Avalonia.Animation;
+using System.Text;
+using System.Net.Sockets;
+using System.Threading;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using HarfBuzzSharp;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace Demo.ViewModels
 {
     public partial class RealTimeChartViewModel : ViewModelBase
     {
-        private readonly Random _random = new();
         private readonly List<DateTimePoint> _values = new();
+        private readonly List<DateTimePoint> _values2 = new();
+        private readonly List<DateTimePoint> _values3 = new();
+        private readonly TestDataService service = new TestDataService();
+
+
         private readonly DateTimeAxis _customAxis;
 
-        public RealTimeChartViewModel()
-        {
-            Series = new ObservableCollection<ISeries>
-        {
-            new LineSeries<DateTimePoint>
-            {
-                Values = _values,
-                Fill = new SolidColorPaint(new SKColor(255, 205, 210, 100)),
-                GeometryFill = null,
-                GeometryStroke = null,
-            }
-        };
+        public RealTimeChartViewModel() { }
 
+        public RealTimeChartViewModel(int series)
+        {
+            var blue = new SKColor(25, 118, 210);
+            var red = new SKColor(229, 57, 53);
+            var yellow = new SKColor(198, 167, 0);
+            var barWidth = 5;
+            var strokeWidth = 5;
+            var padding = 2;
+
+            if (series == 0)
+            {
+                Series = new ObservableCollection<ISeries>
+                {
+                    new LineSeries<DateTimePoint>
+                    {
+                        Name = "X value",
+                        Values = _values,
+                        Fill = null,
+                        GeometryFill =  null,
+                        GeometryStroke = null,
+                        Stroke = new SolidColorPaint(red,strokeWidth),
+                    },
+                    new LineSeries<DateTimePoint>
+                    {
+                        Name = "Y value",
+                        Values = _values2,
+                        Fill = null,
+                        GeometryFill =  null,
+                        GeometryStroke = null,
+                        Stroke = new SolidColorPaint(blue,strokeWidth),
+                    },
+                    new LineSeries<DateTimePoint>
+                    {
+                        Name = "Z value",
+                        Values = _values3,
+                        Fill = null,
+                        GeometryFill =  null,
+                        GeometryStroke = null,
+                        Stroke = new SolidColorPaint(yellow,strokeWidth),
+                    },
+                };
+            }
+            else 
+            {
+                Series = new ObservableCollection<ISeries>
+                {
+                    new ColumnSeries<DateTimePoint>
+                    {
+                        Name = "X value",
+                        Values = _values,
+                        Fill = new SolidColorPaint(blue),
+                        Stroke = new SolidColorPaint(blue),
+                        MaxBarWidth = barWidth,
+                        Padding = padding,
+                    },
+                    new ColumnSeries<DateTimePoint>
+                    {
+                        Name = "Y value",
+                        Values = _values2,
+                        Fill = new SolidColorPaint(red),
+                        Stroke = new SolidColorPaint(red),
+                        MaxBarWidth = barWidth,
+                        Padding = padding,
+                    },
+                    new ColumnSeries<DateTimePoint>
+                    {
+                        Name = "Z value",
+                        Values = _values3,
+                        Fill = new SolidColorPaint(yellow),
+                        Stroke = new SolidColorPaint(yellow),
+                        MaxBarWidth = barWidth,
+                        Padding = padding,
+                    },
+                };
+            };
             _customAxis = new DateTimeAxis(TimeSpan.FromSeconds(1), Formatter)
             {
                 CustomSeparators = GetSeparators(),
@@ -43,27 +116,53 @@ namespace Demo.ViewModels
             };
 
             XAxes = new Axis[] { _customAxis };
-
             _ = ReadData();
         }
 
         public ObservableCollection<ISeries> Series { get; set; }
 
-        public object Sync { get; } = new object();
-
-
         public Axis[] XAxes { get; set; }
-
         public bool IsReading { get; set; } = true;
 
         private async Task ReadData()
         {
-            // to keep this sample simple, we run the next infinite loop 
-            // in a real application you should stop the loop/task when the view is disposed 
-
-            while (IsReading)
+            var ws = service.Ws;
+            var buffer = service.Buffer;
+            using (ws)
             {
-                await getWebSocket();
+                await ws.ConnectAsync(service.Uri, CancellationToken.None);
+                while (ws.State == WebSocketState.Open)
+                {
+                    var result = await ws.ReceiveAsync(buffer, CancellationToken.None);
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
+                    }
+                    else
+                    {
+                        string res = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                        var data = JsonConvert.DeserializeObject<TestData>(res);
+
+                        _values.Add(new DateTimePoint(DateTime.Now, data.x));
+                        _values2.Add(new DateTimePoint(DateTime.Now, data.y));
+                        _values3.Add(new DateTimePoint(DateTime.Now, data.z));
+
+                        if (_values.Count > 50)
+                        {
+                            _values.RemoveAt(0);
+                            _values2.RemoveAt(0);
+                            _values3.RemoveAt(0);
+                        }
+
+                        _customAxis.CustomSeparators = GetSeparators();
+
+                        if (IsReading == false)
+                        {
+                            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
+                            Debug.WriteLine("Client Closed");
+                        }
+                    }
+                }
             }
         }
 
@@ -73,9 +172,6 @@ namespace Demo.ViewModels
 
             return new double[]
             {
-                now.AddSeconds(-30).Ticks,
-                now.AddSeconds(-25).Ticks,
-                now.AddSeconds(-20).Ticks,
                 now.AddSeconds(-15).Ticks,
                 now.AddSeconds(-10).Ticks,
                 now.AddSeconds(-5).Ticks,
@@ -92,26 +188,5 @@ namespace Demo.ViewModels
                 : $"{secsAgo:N0}s ago";
         }
 
-        private async Task getWebSocket()
-        {
-            Uri uri = new("ws://113.161.84.132:8800/temp");
-
-            using ClientWebSocket ws = new();
-            await ws.ConnectAsync(uri, default);
-
-            var bytes = new byte[1024];
-            var result = await ws.ReceiveAsync(bytes, default);
-            string res = Encoding.UTF8.GetString(bytes, 0, result.Count);
-            var data = JsonConvert.DeserializeObject<Temperature>(res);
-
-            _values.Add(new DateTimePoint(DateTime.Now, data.temperature));
-
-            if (_values.Count > 30) _values.RemoveAt(0);
-            _customAxis.CustomSeparators = GetSeparators();
-
-            Debug.WriteLine(data);
-
-            //await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client closed", default);
-        }
     }
 }
