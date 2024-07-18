@@ -6,7 +6,13 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Net.WebSockets;
+using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Demo.Models;
+using Avalonia.Animation;
 
 namespace Demo.ViewModels
 {
@@ -23,7 +29,7 @@ namespace Demo.ViewModels
             new LineSeries<DateTimePoint>
             {
                 Values = _values,
-                Fill = null,
+                Fill = new SolidColorPaint(new SKColor(255, 205, 210, 100)),
                 GeometryFill = null,
                 GeometryStroke = null,
             }
@@ -43,9 +49,10 @@ namespace Demo.ViewModels
 
         public ObservableCollection<ISeries> Series { get; set; }
 
-        public Axis[] XAxes { get; set; }
-
         public object Sync { get; } = new object();
+
+
+        public Axis[] XAxes { get; set; }
 
         public bool IsReading { get; set; } = true;
 
@@ -56,19 +63,7 @@ namespace Demo.ViewModels
 
             while (IsReading)
             {
-                await Task.Delay(100);
-
-                // Because we are updating the chart from a different thread 
-                // we need to use a lock to access the chart data. 
-                // this is not necessary if your changes are made in the UI thread. 
-                lock (Sync)
-                {
-                    _values.Add(new DateTimePoint(DateTime.Now, _random.Next(0, 10)));
-                    if (_values.Count > 100) _values.RemoveAt(0);
-
-                    // we need to update the separators every time we add a new point 
-                    _customAxis.CustomSeparators = GetSeparators();
-                }
+                await getWebSocket();
             }
         }
 
@@ -78,9 +73,13 @@ namespace Demo.ViewModels
 
             return new double[]
             {
-            now.AddSeconds(-10).Ticks,
-            now.AddSeconds(-5).Ticks,
-            now.Ticks
+                now.AddSeconds(-30).Ticks,
+                now.AddSeconds(-25).Ticks,
+                now.AddSeconds(-20).Ticks,
+                now.AddSeconds(-15).Ticks,
+                now.AddSeconds(-10).Ticks,
+                now.AddSeconds(-5).Ticks,
+                now.Ticks
             };
         }
 
@@ -91,6 +90,28 @@ namespace Demo.ViewModels
             return secsAgo < 1
                 ? "now"
                 : $"{secsAgo:N0}s ago";
+        }
+
+        private async Task getWebSocket()
+        {
+            Uri uri = new("ws://113.161.84.132:8800/temp");
+
+            using ClientWebSocket ws = new();
+            await ws.ConnectAsync(uri, default);
+
+            var bytes = new byte[1024];
+            var result = await ws.ReceiveAsync(bytes, default);
+            string res = Encoding.UTF8.GetString(bytes, 0, result.Count);
+            var data = JsonConvert.DeserializeObject<Temperature>(res);
+
+            _values.Add(new DateTimePoint(DateTime.Now, data.temperature));
+
+            if (_values.Count > 30) _values.RemoveAt(0);
+            _customAxis.CustomSeparators = GetSeparators();
+
+            Debug.WriteLine(data);
+
+            //await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client closed", default);
         }
     }
 }

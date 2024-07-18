@@ -18,5 +18,7 @@ namespace Demo
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace();
+
+       
     }
 }

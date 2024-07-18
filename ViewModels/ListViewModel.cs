@@ -26,9 +26,16 @@ namespace Demo.ViewModels
         [ObservableProperty]
         public string? _message;
 
+        [ObservableProperty]
+        public int? _count;
+
+        [ObservableProperty]
+        public ViewModelBase _currentView;
+
         public ListViewModel() {
             UserName = "Username";
             Email = "Email";
+            CurrentView = new RealTimeChartViewModel();
             Messenger.RegisterAll(this);
         }
 
@@ -63,7 +70,8 @@ namespace Demo.ViewModels
             if (users != null)
             {
                 UserList = new ObservableCollection<User>(users);
-                Message = $"Succesfully get {users.Count} users !!";
+                Count = users.Count;
+                Message = $"Total {Count} users !!";
             }
         }
 

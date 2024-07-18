@@ -6,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Demo.ViewModels"
     Title="Demo"
+    Width="1080"
+    Height="720"
     x:DataType="vm:MainWindowViewModel"
     ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/avalonia-logo.ico"
@@ -17,4 +19,5 @@
             <CrossFade Duration="0:00:01" />
         </TransitioningContentControl.PageTransition>
     </TransitioningContentControl>
+	
 </Window>
