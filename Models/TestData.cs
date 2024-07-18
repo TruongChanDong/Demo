@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Models
 {
-    internal class TestData
+    public class TestData
     {
         public DateTime timestamp { get; set; }
         public double x { get; set; }

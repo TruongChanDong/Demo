@@ -211,7 +211,7 @@
                     Width="120"
                     HorizontalAlignment="Right"
                     Classes="addButton"
-                    Command="{Binding GetListItemCommand}">
+                    Command="{Binding ButtonCommand}">
                     <StackPanel Orientation="Horizontal">
                         <PathIcon
                             Width="11"

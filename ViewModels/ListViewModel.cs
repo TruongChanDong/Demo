@@ -31,10 +31,13 @@ namespace Demo.ViewModels
 
         [ObservableProperty]
         public RealTimeChartViewModel _currentView;
+
+        private bool _flag;
         
         public ListViewModel() {
             UserName = "Username";
             Email = "Email";
+            _flag = false;
             CurrentView = new RealTimeChartViewModel(0);
             Messenger.RegisterAll(this);
         }
@@ -93,6 +96,15 @@ namespace Demo.ViewModels
         {
             CurrentView.IsReading = false;
             CurrentView = new RealTimeChartViewModel(1);
+        }
+
+        [RelayCommand]
+        public void Button()
+        {
+            if (_flag) _flag = false;
+            else _flag = true;
+            Messenger.Send(new GetData(null, _flag));
+            
         }
     }
 }

@@ -15,13 +15,11 @@ using Demo.Models;
 using System.Text;
 using System.Net.Sockets;
 using System.Threading;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using HarfBuzzSharp;
-using static SkiaSharp.HarfBuzz.SKShaper;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Demo.ViewModels
 {
-    public partial class RealTimeChartViewModel : ViewModelBase
+    public partial class RealTimeChartViewModel : ViewModelBase, IRecipient<GetData>
     {
         private readonly List<DateTimePoint> _values = new();
         private readonly List<DateTimePoint> _values2 = new();
@@ -116,7 +114,8 @@ namespace Demo.ViewModels
             };
 
             XAxes = new Axis[] { _customAxis };
-            _ = ReadData();
+            //_ = ReadData(data);
+            Messenger.RegisterAll(this);
         }
 
         public ObservableCollection<ISeries> Series { get; set; }
@@ -124,9 +123,9 @@ namespace Demo.ViewModels
         public Axis[] XAxes { get; set; }
         public bool IsReading { get; set; } = true;
 
-        private async Task ReadData()
+        private  void ReadData(TestData data)
         {
-            var ws = service.Ws;
+            /*var ws = service.Ws;
             var buffer = service.Buffer;
             using (ws)
             {
@@ -163,7 +162,7 @@ namespace Demo.ViewModels
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private double[] GetSeparators()
@@ -188,5 +187,24 @@ namespace Demo.ViewModels
                 : $"{secsAgo:N0}s ago";
         }
 
+        public void Receive(GetData message)
+        {
+            IsReading = message.IsReading;
+            if (message.data != null)
+                {
+                    _values.Add(new DateTimePoint(DateTime.Now, message.data.x));
+                    _values2.Add(new DateTimePoint(DateTime.Now, message.data.y));
+                    _values3.Add(new DateTimePoint(DateTime.Now, message.data.z));
+
+                    if (_values.Count > 50)
+                    {
+                        _values.RemoveAt(0);
+                        _values2.RemoveAt(0);
+                        _values3.RemoveAt(0);
+                    }
+
+                    _customAxis.CustomSeparators = GetSeparators();
+                }
+        }
     }
 }

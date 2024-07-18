@@ -1,52 +1,58 @@
-﻿using Demo.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Demo.Models;
 using LiveChartsCore.Defaults;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Demo.Services
 {
-    internal class TestDataService
+    internal class TestDataService : ObservableRecipient
     {
         private Uri uri = new("ws://113.161.84.132:8800/wsadxl");
-        private ClientWebSocket ws = new ClientWebSocket();
+        private ClientWebSocket ws;
         private byte[] buffer = new byte[1024];
+        public bool IsReading {  get; set; } = true;
 
         public TestDataService()
         {
+
         }
 
         public Uri Uri { get => uri; set => uri = value; }
         public ClientWebSocket Ws { get => ws; set => ws = value; }
         public byte[] Buffer { get => buffer; set => buffer = value; }
 
-        /*public async Task getDataAsync()
+        public async Task getDataAsync()
         {
-            using (ws)
+            if (IsReading)
             {
-                await ws.ConnectAsync(uri, CancellationToken.None);
-                while (ws.State == WebSocketState.Open)
+                using (ws = new ClientWebSocket())
                 {
-                    var result = await ws.ReceiveAsync(buffer, CancellationToken.None);
-                    if (result.MessageType == WebSocketMessageType.Close)
+                    await ws.ConnectAsync(uri, CancellationToken.None);
+                    while (ws.State == WebSocketState.Open)
                     {
-                        await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
-                    }
-                    else
-                    {
+                        var result = await ws.ReceiveAsync(buffer, CancellationToken.None);
                         string res = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        testData = JsonConvert.DeserializeObject<TestData>(res);
+                        var testData = JsonConvert.DeserializeObject<TestData>(res);
+                        Messenger.Send(new GetData(testData, true));
+
                     }
                 }
             }
-        }*/
+        }
+
+        public async Task stopDataAsync()
+        {
+            IsReading = false;
+            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
+        }
+
+
     }
 }
