@@ -17,41 +17,50 @@ namespace Demo.Services
         private Uri uri = new("ws://113.161.84.132:8800/wsadxl");
         private ClientWebSocket ws;
         private byte[] buffer = new byte[1024];
-        public bool IsReading {  get; set; } = true;
+        private CancellationTokenSource source;
+        private CancellationToken token;
+
 
         public TestDataService()
         {
-
+            ws = new ClientWebSocket();
+            source = new CancellationTokenSource();
+            token = source.Token;
         }
-
-        public Uri Uri { get => uri; set => uri = value; }
-        public ClientWebSocket Ws { get => ws; set => ws = value; }
-        public byte[] Buffer { get => buffer; set => buffer = value; }
 
         public async Task getDataAsync()
         {
-            if (IsReading)
+
+            using (ws)
             {
-                using (ws = new ClientWebSocket())
+                await ws.ConnectAsync(uri,token);
+                while (ws.State == WebSocketState.Open && !token.IsCancellationRequested)
                 {
-                    await ws.ConnectAsync(uri, CancellationToken.None);
-                    while (ws.State == WebSocketState.Open)
+                    try
                     {
-                        var result = await ws.ReceiveAsync(buffer, CancellationToken.None);
+                        var result = await ws.ReceiveAsync(buffer, token);
                         string res = Encoding.UTF8.GetString(buffer, 0, result.Count);
                         var testData = JsonConvert.DeserializeObject<TestData>(res);
                         Messenger.Send(new GetData(testData, true));
-
                     }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
+
                 }
             }
+
+
         }
 
-        public async Task stopDataAsync()
+        public void stopDataAsync()
         {
-            IsReading = false;
-            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
+            source.Cancel();
+            source.Dispose();
         }
+
+
 
 
     }

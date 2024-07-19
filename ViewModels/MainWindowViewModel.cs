@@ -11,13 +11,13 @@ namespace Demo.ViewModels
     {
         [ObservableProperty]
         public ViewModelBase _currentViewModel;
-        private TestDataService _testDataService;
+        private TestDataService _testDataService ;
         private bool _lock;
+        
 
         public MainWindowViewModel()
         {
             CurrentViewModel = new ListViewModel();
-            _testDataService = new TestDataService();
             _lock = false;
             Messenger.RegisterAll(this);
 
@@ -30,17 +30,16 @@ namespace Demo.ViewModels
 
         public async void Receive(GetData message)
         {
-            if(message.IsReading && !_lock)
+            if (message.IsReading && !_lock)
             {
                 _lock = true;
+                _testDataService = new TestDataService();
                 await _testDataService.getDataAsync();
             }
             if (!message.IsReading)
             {
-                await _testDataService.stopDataAsync();
-                Thread.Sleep(100);
+                _testDataService.stopDataAsync();
                 _lock = false;
-                _testDataService.IsReading = true;
             }       
         }
     }

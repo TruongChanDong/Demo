@@ -73,7 +73,7 @@ namespace Demo.ViewModels
                     },
                 };
             }
-            else 
+            else
             {
                 Series = new ObservableCollection<ISeries>
                 {
@@ -121,49 +121,6 @@ namespace Demo.ViewModels
         public ObservableCollection<ISeries> Series { get; set; }
 
         public Axis[] XAxes { get; set; }
-        public bool IsReading { get; set; } = true;
-
-        private  void ReadData(TestData data)
-        {
-            /*var ws = service.Ws;
-            var buffer = service.Buffer;
-            using (ws)
-            {
-                await ws.ConnectAsync(service.Uri, CancellationToken.None);
-                while (ws.State == WebSocketState.Open)
-                {
-                    var result = await ws.ReceiveAsync(buffer, CancellationToken.None);
-                    if (result.MessageType == WebSocketMessageType.Close)
-                    {
-                        await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
-                    }
-                    else
-                    {
-                        string res = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        var data = JsonConvert.DeserializeObject<TestData>(res);
-
-                        _values.Add(new DateTimePoint(DateTime.Now, data.x));
-                        _values2.Add(new DateTimePoint(DateTime.Now, data.y));
-                        _values3.Add(new DateTimePoint(DateTime.Now, data.z));
-
-                        if (_values.Count > 50)
-                        {
-                            _values.RemoveAt(0);
-                            _values2.RemoveAt(0);
-                            _values3.RemoveAt(0);
-                        }
-
-                        _customAxis.CustomSeparators = GetSeparators();
-
-                        if (IsReading == false)
-                        {
-                            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
-                            Debug.WriteLine("Client Closed");
-                        }
-                    }
-                }
-            }*/
-        }
 
         private double[] GetSeparators()
         {
@@ -187,24 +144,40 @@ namespace Demo.ViewModels
                 : $"{secsAgo:N0}s ago";
         }
 
+        public bool IsEmpty { get; private set; }
+
         public void Receive(GetData message)
         {
-            IsReading = message.IsReading;
+
+            if (message.IsReading && !IsEmpty)
+            {
+                _values.Clear();
+                _values2.Clear();
+                _values3.Clear();
+                IsEmpty = true;
+            }
+            if (!message.IsReading)
+            {
+                IsEmpty = false;
+            }
             if (message.data != null)
+            {
+                /*Debug.WriteLine("Now: "+DateTime.Now);
+                Debug.WriteLine("Data: "+message.data.timestamp);*/
+
+                _values.Add(new DateTimePoint(DateTime.Now, message.data.x));
+                _values2.Add(new DateTimePoint(DateTime.Now, message.data.y));
+                _values3.Add(new DateTimePoint(DateTime.Now, message.data.z));
+
+                if (_values.Count > 50)
                 {
-                    _values.Add(new DateTimePoint(DateTime.Now, message.data.x));
-                    _values2.Add(new DateTimePoint(DateTime.Now, message.data.y));
-                    _values3.Add(new DateTimePoint(DateTime.Now, message.data.z));
-
-                    if (_values.Count > 50)
-                    {
-                        _values.RemoveAt(0);
-                        _values2.RemoveAt(0);
-                        _values3.RemoveAt(0);
-                    }
-
-                    _customAxis.CustomSeparators = GetSeparators();
+                    _values.RemoveAt(0);
+                    _values2.RemoveAt(0);
+                    _values3.RemoveAt(0);
                 }
+
+                _customAxis.CustomSeparators = GetSeparators();
+            }
         }
     }
 }

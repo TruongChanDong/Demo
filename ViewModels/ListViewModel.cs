@@ -87,14 +87,12 @@ namespace Demo.ViewModels
         [RelayCommand]
         public void BarChart()
         {
-            CurrentView.IsReading = false;
             CurrentView = new RealTimeChartViewModel(0);
         }
 
         [RelayCommand]
         public void ColumnChart()
         {
-            CurrentView.IsReading = false;
             CurrentView = new RealTimeChartViewModel(1);
         }
 
